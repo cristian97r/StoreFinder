@@ -1,1 +1,10 @@
 <h1>This will be the stores page</h1>
+
+<% stores.forEach(function(store){ %>
+    
+    <div>
+        <h4><%= store.name %></h4>
+        <img src="<%=store.image%>" alt="">
+    </div>
+    
+<% }); %>
