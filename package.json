@@ -1,0 +1,23 @@
+{
+  "name": "storefinder",
+  "version": "1.0.0",
+  "description": "The social network of stores",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristian97r/StoreFinder.git"
+  },
+  "author": "Cristian Romero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cristian97r/StoreFinder/issues"
+  },
+  "homepage": "https://github.com/cristian97r/StoreFinder#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}
