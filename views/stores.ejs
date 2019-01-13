@@ -1,15 +1,44 @@
 <% include partials/header %>
 
-<h1>This will be the stores page</h1>
-
-<% stores.forEach(function(store){ %>
-    
-    <div>
-        <h4><%= store.name %></h4>
-        <img src="<%=store.image%>" alt="">
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">This will be the stores page</h1>
+        <p class="lead">orem ipsum dolor sit amet, no commune neglegentur mei, nobis conceptam definitiones sed ne.</p>
+        <hr class="my-4">
+        <p>IEum no admodum percipitur theophrastus, ad mea aliquid civibus. Assentior constituam has at. Qui no magna affert definitionem.</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
     </div>
+
     
-<% }); %>
+        
+       
+        
+    
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+        <% stores.forEach(function(store){ %>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="<%= store.image %>" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-text"><%= store.name %></h4>
+                        <p>This will be the description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <small class="text-muted">9 mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+            </div>
+        </div>
+    </div>
+
 
 <% include partials/footer %>
 
