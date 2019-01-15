@@ -56,7 +56,8 @@ app.post("/stores", function(req, res){
     // data from the form
     var name = req.body.name;
     var image = req.body.image;
-    var newStore = {name: name, image: image};
+    var desc = req.body.description;
+    var newStore = {name: name, image: image, description: desc};
     // add to the database
     Store.create(newStore, function(error, newStore) {
         if(error){
@@ -68,7 +69,14 @@ app.post("/stores", function(req, res){
 });
 
 app.get("/stores/:id", function(req, res) {
-    res.render("show");
+    Store.findById(req.params.id, function(error, foundStore) {
+        if(error){
+            Console.log(error)
+        } else {
+            res.render("show", {store: foundStore});
+        }
+    });
+
 });
 
 
