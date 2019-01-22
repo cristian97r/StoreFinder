@@ -1,7 +1,8 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var mongoose = require("mongoose");
+var express = require('express'),
+app         = express(),
+bodyParser  = require('body-parser'),
+mongoose    = require("mongoose"),
+Store       = require("./models/stores")
 
 mongoose.connect("mongodb://localhost/StoreFinder", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended:true}));
@@ -10,30 +11,6 @@ app.set("view engine", "ejs");
 app.get("/", function(req, res) {
     res.render("landing");  
 });
-
-// SCHEMA & MODEL
-
-var storesSchema = new mongoose.Schema({
-    name:        String,
-    image:       String,
-    description: String
-});
-
-var Store = mongoose.model("Store", storesSchema);
-
-// Store.create({
-//     name: 'Exterior, Kmart White Lake', image:'https://farm4.staticflickr.com/3430/3800151320_e73669661f.jpg',
-//     description: "Spicy jalapeno jerky bresaola tenderloin tongue chicken leberkas. Frankfurter leberkas jerky pork short ribs tongue pork chop t-bone. Filet mignon frankfurter andouille swine turkey strip steak jerky pork leberkas hamburger boudin shoulder shankle spare ribs ground round. Jowl landjaeger pastrami frankfurter meatloaf boudin. Kielbasa shank filet mignon swine beef ribs tail cow corned beef short loin frankfurter spare ribs landjaeger."
-// }, function(error, store){
-//     if(error){
-//         console.log(error)
-//     }else {
-//         console.log("New Store created:")
-//         console.log(store)
-//     }
-// });
-
-// END
 
 app.get("/stores", function(req, res){
     // GET STORES FROM DB
