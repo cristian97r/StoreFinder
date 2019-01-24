@@ -4,4 +4,16 @@
 <img src="<%=store.image%>" alt="">
 <p><%=store.description%></p>
 
+
+<form action="/stores/<%=store._id%>/comments" method="POST">
+    <input type="text" placeholder="Author" name="comment[author]">
+    <input type="text" placeholder="Write comment here" name="comment[text]">
+    <button type="summit">Summit</button>
+</form>
+
+<% store.comments.forEach(function(comment){ %>
+    <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+
+<% }) %>
+
 <% include partials/footer %>

@@ -2,7 +2,8 @@ var express = require('express'),
 app         = express(),
 bodyParser  = require('body-parser'),
 mongoose    = require("mongoose"),
-Store       = require("./models/stores")
+Store       = require("./models/stores"),
+Comment     = require("./models/comment")
 
 mongoose.connect("mongodb://localhost/StoreFinder", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended:true}));
@@ -46,7 +47,7 @@ app.post("/stores", function(req, res){
 });
 
 app.get("/stores/:id", function(req, res) {
-    Store.findById(req.params.id, function(error, foundStore) {
+    Store.findById(req.params.id).populate("comments").exec(function(error, foundStore) {
         if(error){
             Console.log(error)
         } else {
@@ -54,6 +55,26 @@ app.get("/stores/:id", function(req, res) {
         }
     });
 
+});
+
+
+app.post("/stores/:id/comments", function(req, res) {
+    Store.findById(req.params.id, function(error, store) {
+        if(error){
+            console.log(error);
+            res.redirect("/stores");
+        } else {
+            Comment.create(req.body.comment, function(error, comment){
+                if(error){
+                    console.log(error);
+                } else {
+                    store.comments.push(comment);
+                    store.save();
+                    res.redirect("/stores/" + store._id);
+                }
+            });
+        }
+    });
 });
 
 

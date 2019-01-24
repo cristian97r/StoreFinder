@@ -5,7 +5,13 @@ var mongoose = require("mongoose");
 var storesSchema = new mongoose.Schema({
     name:        String,
     image:       String,
-    description: String
+    description: String,
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
 
 var Store = mongoose.model("Store", storesSchema);
