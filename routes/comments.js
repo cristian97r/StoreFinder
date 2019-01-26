@@ -13,8 +13,12 @@ router.post("/stores/:id/comments", isLoggedIn ,function(req, res) {
                 if(error){
                     console.log(error);
                 } else {
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
+                    comment.save();
                     store.comments.push(comment);
                     store.save();
+                    console.log(comment);
                     res.redirect("/stores/" + store._id);
                 }
             });
