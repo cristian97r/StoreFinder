@@ -14,17 +14,21 @@ router.get("/stores", function(req, res){
 });
 
 
-router.get("/stores/new", function(req, res) {
+router.get("/stores/new", isLoggedIn ,function(req, res) {
     res.render("new")
 });
 
 
-router.post("/stores", function(req, res){
+router.post("/stores", isLoggedIn ,function(req, res){
     // data from the form
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
-    var newStore = {name: name, image: image, description: desc};
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newStore = {name: name, image: image, description: desc, author: author};
     // add to the database
     Store.create(newStore, function(error, newStore) {
         if(error){

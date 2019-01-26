@@ -18,7 +18,6 @@ router.post("/stores/:id/comments", isLoggedIn ,function(req, res) {
                     comment.save();
                     store.comments.push(comment);
                     store.save();
-                    console.log(comment);
                     res.redirect("/stores/" + store._id);
                 }
             });

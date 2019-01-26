@@ -3,15 +3,22 @@ var mongoose = require("mongoose");
 // SCHEMA & MODEL
 
 var storesSchema = new mongoose.Schema({
-    name:        String,
-    image:       String,
-    description: String,
-    comments: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Comment"
-        }
-    ]
+  name: String,
+  image: String,
+  description: String,
+  author: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    username: String
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ]
 });
 
 var Store = mongoose.model("Store", storesSchema);
