@@ -1,18 +1,19 @@
 // DEPENDENCIES
-var express   = require('express'),
-app           = express(),
-bodyParser    = require('body-parser'),
-mongoose      = require("mongoose"),
-passport      = require("passport"),
-LocalStrategy = require("passport-local"),
-Store         = require("./models/stores"),
-User          = require("./models/user"),
-Comment       = require("./models/comment");
+var express    = require('express'),
+app            = express(),
+bodyParser     = require('body-parser'),
+mongoose       = require("mongoose"),
+passport       = require("passport"),
+LocalStrategy  = require("passport-local"),
+methodOverride = require('method-override'),
+Store          = require("./models/stores"),
+User           = require("./models/user"),
+Comment        = require("./models/comment");
 
 // ROUTES DEPENDENCIES
-var storeRoutes     = require('./routes/stores'),
-    commentRoutes   = require('./routes/comments'),
-    authRoutes      = require('./routes/auth')
+var storeRoutes    = require('./routes/stores'),
+    commentRoutes  = require('./routes/comments'),
+    authRoutes     = require('./routes/auth')
 
 
 // APP CONFIG
@@ -20,6 +21,7 @@ mongoose.connect("mongodb://localhost/StoreFinder", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public")); 
+app.use(methodOverride("_method"));
 
 
 // PASSPORT CONFIG

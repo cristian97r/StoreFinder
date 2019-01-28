@@ -11,6 +11,8 @@
     <button type="summit">Summit</button>
 </form>
 
+<a href="/stores/<%=store._id%>/edit">EDIT</a>
+
 <% store.comments.forEach(function(comment){ %>
     <p><strong><%= comment.author.username %></strong> - <%= comment.text %></p>
 

@@ -15,7 +15,7 @@ router.get("/stores", function(req, res){
 
 
 router.get("/stores/new", isLoggedIn ,function(req, res) {
-    res.render("new")
+    res.render("new");
 });
 
 
@@ -47,7 +47,26 @@ router.get("/stores/:id", function(req, res) {
             res.render("show", {store: foundStore});
         }
     });
+});
 
+router.get("/stores/:id/edit", function(req, res) {
+    Store.findById(req.params.id, function(error, foundStore) {
+        if(error){
+            console.log(error);
+        } else {
+            res.render("edit", {store: foundStore});
+        }
+    });
+});
+
+router.put("/stores/:id", function(req, res) {
+    Store.findOneAndUpdate(req.params.id, req.body.store, function(error, updatedStore) {
+        if(error){
+            console.log(error)
+        } else {
+            res.redirect("/stores/" + req.params.id);
+        }
+    });
 });
 
 // MIDDLEWARE

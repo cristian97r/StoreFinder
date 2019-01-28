@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<h1>Edit Store</h1>
+
+
+<form action="/stores/<%=store._id%>?_method=PUT" method="POST">
+    <input type="text" name="store[name]" value="<%=store.name%>">
+    <input type="text" name="store[image]" value="<%=store.image%>">
+    <textarea name="store[descripton]" cols="30" rows="10"><%= store.description %></textarea>
+    <button type="summit">Summit</button>
+</form>
+
+<% include partials/footer %>
