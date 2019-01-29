@@ -11,14 +11,19 @@
     <button type="summit">Summit</button>
 </form>
 
-<a href="/stores/<%=store._id%>/edit">EDIT</a>
-<form action="/stores/<%=store._id%>?_method=DELETE" method="post">
-    <button>Delete</button>
-</form>
+<% if(currentUser && store.author.id.equals(currentUser._id)){ %>
+    <a href="/stores/<%=store._id%>/edit">EDIT</a>
+    <form action="/stores/<%=store._id%>?_method=DELETE" method="post">
+        <button>Delete</button>
+    </form>
+<% } else { %>
+
+<% } %>
+
 
 <% store.comments.forEach(function(comment){ %>
     <p><strong><%= comment.author.username %></strong> - <%= comment.text %></p>
-
+    <a href="/stores/<%=store._id%>/comments/<%=comment._id%>/edit">edit comment</a>
 <% }) %>
 
 <% include partials/footer %>

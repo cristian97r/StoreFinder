@@ -49,9 +49,9 @@ router.get("/stores/:id", function(req, res) {
     });
 });
 
-router.get("/stores/:id/edit", function(req, res) {
-    Store.findById(req.params.id, function(error, foundStore) {
-        if(error){
+router.get("/stores/:id/edit", checkStoreOwnership ,function (req, res) {
+    Store.findById(req.params.id, function (error, foundStore) {
+        if (error) {
             console.log(error);
         } else {
             res.render("edit", {store: foundStore});
@@ -59,7 +59,7 @@ router.get("/stores/:id/edit", function(req, res) {
     });
 });
 
-router.put("/stores/:id", function(req, res) {
+router.put("/stores/:id", checkStoreOwnership ,function(req, res) {
     Store.findOneAndUpdate(req.params.id, req.body.store, function(error, updatedStore) {
         if(error){
             console.log(error)
@@ -69,7 +69,7 @@ router.put("/stores/:id", function(req, res) {
     });
 });
 
-router.delete("/stores/:id", function(req, res) {
+router.delete("/stores/:id", checkStoreOwnership ,function(req, res) {
     Store.findOneAndRemove(req.params.id, function(error) {
         if(error){
             console.log(error);
@@ -83,6 +83,23 @@ router.delete("/stores/:id", function(req, res) {
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()){
         return next();
+    }
+}
+
+function checkStoreOwnership(req, res, next) {
+    if(req.isAuthenticated()){
+        Store.findById(req.params.id, function(error, foundStore) {
+            if(error){
+                res.redirect('back');
+            } else {
+                if(foundStore.author.id.equals(req.user._id)){
+                    return next();
+                } else {
+                    res.redirect("back");                }
+            }
+        });
+    } else {
+        res.redirect("back");
     }
 }
 

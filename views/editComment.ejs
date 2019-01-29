@@ -1,0 +1,7 @@
+<form action="/stores/<%=store_id%>/comments/<%=comment._id%>?_method=PUT" method="POST">
+    <input type="text" value="<%=comment.text%>" name="comment[text]">
+    <button type="summit">Summit</button>
+</form>
+<form action="/stores/<%=store_id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+    <button type="summit">DELETE</button>
+</form>

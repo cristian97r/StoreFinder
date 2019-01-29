@@ -25,6 +25,36 @@ router.post("/stores/:id/comments", isLoggedIn ,function(req, res) {
     });
 });
 
+router.get("/stores/:id/comments/:comment_id/edit", function(req, res) {
+    Comment.findById(req.params.comment_id, function(error, foundComment) {
+        if(error){
+            res.redirect("back");
+        } else {
+            res.render("editComment", {store_id: req.params.id, comment: foundComment});
+        }
+    });
+});
+
+router.put("/stores/:id/comments/:comment_id", function(req, res) {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(error, updatedComment){
+        if(error){
+            console.log(error);
+        } else {
+            res.redirect("/stores/" + req.params.id);
+        }
+    });
+});
+
+router.delete("/stores/:id/comments/:comment_id", function(req, res) {
+    Comment.findByIdAndRemove(req.params.comment_id, function(error) {
+        if(error){
+            console.log(error);
+        } else {
+            res.redirect("/stores/" + req.params.id);
+        }
+    })
+})
+
 // MIDDLEWARE
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()){
