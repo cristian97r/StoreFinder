@@ -12,6 +12,9 @@
 </form>
 
 <a href="/stores/<%=store._id%>/edit">EDIT</a>
+<form action="/stores/<%=store._id%>?_method=DELETE" method="post">
+    <button>Delete</button>
+</form>
 
 <% store.comments.forEach(function(comment){ %>
     <p><strong><%= comment.author.username %></strong> - <%= comment.text %></p>

@@ -69,6 +69,16 @@ router.put("/stores/:id", function(req, res) {
     });
 });
 
+router.delete("/stores/:id", function(req, res) {
+    Store.findOneAndRemove(req.params.id, function(error) {
+        if(error){
+            console.log(error);
+        } else {
+            res.redirect("/stores");
+        }
+    });
+});
+
 // MIDDLEWARE
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()){
