@@ -36,11 +36,5 @@ router.get('/logout', function(req, res) {
     res.redirect('/')
 })
 
-// MIDDLEWARE
-function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()){
-        return next();
-    }
-}
 
 module.exports = router;
