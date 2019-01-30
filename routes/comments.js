@@ -25,7 +25,7 @@ router.post("/stores/:id/comments", isLoggedIn ,function(req, res) {
     });
 });
 
-router.get("/stores/:id/comments/:comment_id/edit", function(req, res) {
+router.get("/stores/:id/comments/:comment_id/edit", checkCommentOwnership ,function(req, res) {
     Comment.findById(req.params.comment_id, function(error, foundComment) {
         if(error){
             res.redirect("back");
@@ -35,7 +35,7 @@ router.get("/stores/:id/comments/:comment_id/edit", function(req, res) {
     });
 });
 
-router.put("/stores/:id/comments/:comment_id", function(req, res) {
+router.put("/stores/:id/comments/:comment_id", checkCommentOwnership ,function(req, res) {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(error, updatedComment){
         if(error){
             console.log(error);
@@ -45,7 +45,7 @@ router.put("/stores/:id/comments/:comment_id", function(req, res) {
     });
 });
 
-router.delete("/stores/:id/comments/:comment_id", function(req, res) {
+router.delete("/stores/:id/comments/:comment_id", checkCommentOwnership ,function(req, res) {
     Comment.findByIdAndRemove(req.params.comment_id, function(error) {
         if(error){
             console.log(error);
@@ -62,4 +62,20 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+function checkCommentOwnership(req, res, next) {
+    if(req.isAuthenticated()){
+        Comment.findById(req.params.comment_id, function(error, foundComment) {
+            if(error){
+                res.redirect('back');
+            } else {
+                if(foundComment.author.id.equals(req.user._id)){
+                    return next();
+                } else {
+                    res.redirect("back");                }
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
+}
 module.exports = router;
