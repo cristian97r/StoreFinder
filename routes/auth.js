@@ -12,10 +12,11 @@ router.post('/register', function(req, res) {
     const newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(error, user) {
         if(error){
-            console.log(error)
-            return res.render('register')
+            req.flash("error", error.message)
+            return res.redirect('register')
         }
         passport.authenticate('local')(req, res, function(){
+            req.flash("success", "Welcome to StoreFinder " + user.username);
             res.redirect('/stores');
         });
     });
@@ -33,6 +34,7 @@ router.post('/login', passport.authenticate("local", {
 
 router.get('/logout', function(req, res) {
     req.logOut();
+    req.flash("success", "You have logout!")
     res.redirect('/')
 })
 

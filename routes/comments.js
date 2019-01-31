@@ -51,9 +51,10 @@ router.delete("/stores/:id/comments/:comment_id", middleware.checkCommentOwnersh
         if(error){
             console.log(error);
         } else {
+            req.flash("success", "Comment deleted")
             res.redirect("/stores/" + req.params.id);
         }
-    })
-})
+    });
+});
 
 module.exports = router;

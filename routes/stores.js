@@ -42,8 +42,9 @@ router.post("/stores", middleware.isLoggedIn ,function(req, res){
 
 router.get("/stores/:id", function(req, res) {
     Store.findById(req.params.id).populate("comments").exec(function(error, foundStore) {
-        if(error){
-            Console.log(error)
+        if(error || !foundStore){
+            req.flash("error", "Store not found")
+            res.redirect("back");
         } else {
             res.render("show", {store: foundStore});
         }
@@ -65,6 +66,7 @@ router.put("/stores/:id", middleware.checkStoreOwnership ,function(req, res) {
         if(error){
             console.log(error)
         } else {
+            req.flash("success", "Store updated")
             res.redirect("/stores/" + req.params.id);
         }
     });
@@ -75,6 +77,7 @@ router.delete("/stores/:id", middleware.checkStoreOwnership ,function(req, res) 
         if(error){
             console.log(error);
         } else {
+            req.flash("success", "Store deleted")
             res.redirect("/stores");
         }
     });
