@@ -18,7 +18,8 @@ var storeRoutes    = require('./routes/stores'),
 
 
 // APP CONFIG
-mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
+var url = process.env.DATABASEURL || "mongodb://localhost/StoreFinder"
+mongoose.connect(url, { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public")); 
